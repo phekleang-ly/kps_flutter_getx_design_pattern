@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kps_flutter_getx_design_battern/app/data/access_token.dart';
+import 'package:kps_flutter_getx_design_battern/app/module/auth/repository/auth_repository.dart';
 
 class LoginController extends GetxController {
   var usernameController = TextEditingController().obs;
   var passwordController = TextEditingController().obs;
   var loading = false.obs;
   var isPasswordHidden = true.obs;
+  final authRepository = Get.find<AuthRepository>();
 
-  void togglePasswordVisibility(){
+  void togglePasswordVisibility() {
     isPasswordHidden.value = !isPasswordHidden.value;
   }
-
 
   @override
   void onClose() {
@@ -34,11 +35,20 @@ class LoginController extends GetxController {
     loading.value = true;
     await Future.delayed(Duration(seconds: 2));
     loading.value = false;
-    AccessToken.saveToken(
+
+    var loginResponse = await authRepository.login(
       username: username,
-      token: "TOKEN",
-      refresh: "REFRESH",
+      password: password,
     );
-    Get.offNamed("/home");
+    if (loginResponse.accessToken != null) {
+      AccessToken.saveToken(
+        username: username,
+        token: loginResponse.accessToken,
+        refresh: loginResponse.refreshToken,
+      );
+      Get.offNamed("/home");
+    } else {
+      Get.snackbar("Error", "Your username and password incorrect");
+    }
   }
 }
