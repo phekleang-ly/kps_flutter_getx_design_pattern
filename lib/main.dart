@@ -15,8 +15,8 @@ import 'package:kps_flutter_getx_design_battern/app/module/splash/splash_view.da
 
 Future<void> main() async {
   await GetStorage.init();
-  Get.lazyPut<ApiNetworkService>(()=> ApiNetworkServiceImpl());
-  Get.lazyPut<AuthRepository>(()=> AuthRepositoryImpl());
+  Get.lazyPut<ApiNetworkService>(()=> ApiNetworkServiceImpl(),fenix: true);
+  Get.lazyPut<AuthRepository>(()=> AuthRepositoryImpl(),fenix: true);
 
   runApp(const MyApp());
 }
