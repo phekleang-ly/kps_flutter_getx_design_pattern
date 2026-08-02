@@ -6,4 +6,6 @@ import 'package:kps_flutter_getx_design_battern/app/cores/models/auth/register_r
 abstract class ApiNetworkService {
   Future<LoginResponse> login(LoginRequest req);
   Future<RegisterResponse> register(RegisterRequest req);
+  Future<bool> refreshToken();
+  Future<dynamic> get(String uri);
 }

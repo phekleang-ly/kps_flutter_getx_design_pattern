@@ -14,7 +14,7 @@ class CustomButtomWiget extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 18),
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Colors.red,
+          color: Colors.blueAccent,
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
       

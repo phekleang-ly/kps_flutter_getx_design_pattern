@@ -7,6 +7,10 @@ import 'package:kps_flutter_getx_design_battern/app/module/auth/register/registe
 import 'package:kps_flutter_getx_design_battern/app/module/auth/register/register_view.dart';
 import 'package:kps_flutter_getx_design_battern/app/module/home/home_binding.dart';
 import 'package:kps_flutter_getx_design_battern/app/module/home/home_view.dart';
+import 'package:kps_flutter_getx_design_battern/app/module/post/post_binding.dart';
+import 'package:kps_flutter_getx_design_battern/app/module/post/post_view.dart';
+import 'package:kps_flutter_getx_design_battern/app/module/post/repository/post_repository.dart';
+import 'package:kps_flutter_getx_design_battern/app/module/post/repository/post_repository_impl.dart';
 import 'package:kps_flutter_getx_design_battern/app/module/splash/splash_binding.dart';
 import 'package:kps_flutter_getx_design_battern/app/module/splash/splash_view.dart';
 
@@ -20,6 +24,7 @@ Future<void> main() async {
 
   Get.lazyPut<ApiNetworkService>(()=> ApiNetworkServiceImpl(), fenix: true);
   Get.lazyPut<AuthRepository>(()=> AuthRepositoryImpl(), fenix: true);
+  Get.lazyPut<PostRepository>(()=> PostRepositoryImpl(), fenix: true);
 
   runApp(const MyApp());
 }
@@ -40,7 +45,8 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/", page: ()=> SplashView(), binding: SplashBinding(), transition: Transition.leftToRight),
         GetPage(name: "/home", page: ()=> HomeView(), binding: HomeBinding(), transition: Transition.leftToRight),
         GetPage(name: "/login", page: ()=> LoginView(), binding: LoginBinding(), transition: Transition.leftToRight),
-        GetPage(name: "/register", page: ()=> RegisterView(), binding: RegisterBinding(), transition: Transition.leftToRight)
+        GetPage(name: "/register", page: ()=> RegisterView(), binding: RegisterBinding(), transition: Transition.leftToRight),
+        GetPage(name: "/posts", page: ()=> PostView(), binding: PostBinding(), transition: Transition.leftToRight)
       ],
     );
   }

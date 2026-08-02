@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kps_flutter_getx_design_battern/app/cores/models/auth/register_request.dart';
-import 'package:kps_flutter_getx_design_battern/app/data/access_token.dart';
 import 'package:kps_flutter_getx_design_battern/app/module/auth/repository/auth_repository.dart';
 
 class RegisterController extends GetxController {
@@ -94,36 +93,12 @@ class RegisterController extends GetxController {
       );
 
       var registerResponse = await authRepository.register(request);
-      
-      if (registerResponse.accessToken != null) {
-        // Option 1: API returned token directly
-        loading.value = false;
-        AccessToken.saveToken(
-          username: username,
-          token: registerResponse.accessToken,
-          refresh: registerResponse.refreshToken,
-        );
-        Get.offAllNamed("/home");
-      } else if (registerResponse.code == "200" || registerResponse.message == "Create Success") {
-        // Option 2: Registration success but no token (Auto-Login)
-        var loginResponse = await authRepository.login(
-          username: username,
-          password: password,
-        );
-        loading.value = false;
-        if (loginResponse.accessToken != null) {
-          AccessToken.saveToken(
-            username: username,
-            token: loginResponse.accessToken,
-            refresh: loginResponse.refreshToken,
-          );
-          Get.offAllNamed("/home");
-        } else {
-          Get.snackbar("Success", "Account created successfully. Please login.");
-          Get.offAllNamed("/login");
-        }
+      loading.value = false;
+
+      if (registerResponse.code == "200" || registerResponse.message == "Create Success") {
+        Get.snackbar("Success", registerResponse.data ?? "Account created successfully. Please login.");
+        Get.offNamed("/login");
       } else {
-        loading.value = false;
         Get.snackbar("Error", registerResponse.message ?? "Registration failed.");
       }
     } catch (e) {

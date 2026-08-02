@@ -14,7 +14,7 @@ class LoginView extends GetView<LoginController> {
         appBar: AppBar(
           title: Text("Login", style: TextStyle(color: Colors.white)),
           iconTheme: IconThemeData(color: Colors.white),
-          backgroundColor: Colors.red,
+          backgroundColor: Colors.blueAccent,
         ),
 
         body: Container(

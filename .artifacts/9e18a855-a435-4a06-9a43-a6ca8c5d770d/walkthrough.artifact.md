@@ -23,6 +23,10 @@ Renamed the following files in `lib/app/cores/models/auth/` to follow the Dart `
 - **Unused Imports**: Removed redundant imports in `main.dart`.
 - **Internal Imports**: Updated cross-references within the model files (e.g., `RegisterResponse` now correctly imports `user.dart`).
 
+### 4. Registration Flow Adjustments
+- **Removed Auto-Login**: Updated `RegisterController` to remove the automatic login step after registration.
+- **Success Handling**: On successful registration, the app now shows a success message with the data returned from the server and navigates to the `/login` screen.
+
 ## Verification Results
 - All key modified files were verified using the IDE's analyzer tool.
 - No errors or warnings remain in the project source code.

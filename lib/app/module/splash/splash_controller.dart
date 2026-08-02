@@ -9,7 +9,7 @@ class SplashController extends GetxController {
     await Future.delayed(Duration(seconds:3));
     loading.value = false;
     if(AccessToken.getToken().isNotEmpty){
-      Get.off("/home");
+      Get.offNamed("/home");
     }else{
       Get.offNamed("/login");
     }

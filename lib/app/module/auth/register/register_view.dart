@@ -14,7 +14,7 @@ class RegisterView extends GetView<RegisterController> {
         appBar: AppBar(
           title: const Text("Register", style: TextStyle(color: Colors.white)),
           iconTheme: const IconThemeData(color: Colors.white),
-          backgroundColor: Colors.red,
+          backgroundColor: Colors.blueAccent,
         ),
         body: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
