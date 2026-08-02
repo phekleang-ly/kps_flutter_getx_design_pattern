@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
@@ -13,10 +14,10 @@ class PostRepositoryImpl extends PostRepository{
   final apiNetWorkService = Get.find<ApiNetworkService>();
 
   @override
-  Future<List<Content>> getAllPost({String? page, String? limit, String? status}) async {
+  Future<List<Content>> getAllPost({Int? page, String? limit, String? status}) async {
     List<Content> list = [];
     var responseBody = await apiNetWorkService.get(
-      "${ConstantUri.listPostPath}?page=${page}&size=${limit ?? 10}&status=${status ?? 'ACT'}",
+      "${ConstantUri.listPostPath}?page=${page ?? 0}&size=${limit ?? 10}&status=${status ?? 'ACT'}",
     );
     if(responseBody != null){
       PostResponse postResponse = PostResponse.fromJson(jsonDecode(responseBody));

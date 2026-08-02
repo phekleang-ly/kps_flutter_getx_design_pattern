@@ -1,24 +1,28 @@
-# Implementation Plan - Fix Null AccessToken on Registration
+# Implementation Plan - Fix Unauthorized Access and Retry Logic
 
-The user reports that `accessToken` is null in the `RegisterResponse` after a successful registration, even though it works for login. This plan involves adding debug logging to inspect the API response and then adjusting the model mapping if necessary.
+This plan addresses the "Unauthorized" error encountered when navigating to `/posts` by fixing a bug in the token refresh and request retry logic within `ApiNetworkServiceImpl`.
+
+## User Review Required
+
+> [!IMPORTANT]
+> I will also fix a syntax error in the `RefreshTokenRequest.dart` model (extra closing brace) to ensure the project builds correctly.
 
 ## Proposed Changes
 
 ### [Cores]
 
+#### [MODIFY] [RefreshTokenRequest.dart](file:///D:/BBU_Lessons/Mobile_Programming/kps_flutter_getx_design_pattern/lib/app/cores/models/auth/RefreshTokenRequest.dart)
+- Remove the redundant closing brace `}` in the constructor.
+
 #### [MODIFY] [api_network_service_impl.dart](file:///D:/BBU_Lessons/Mobile_Programming/kps_flutter_getx_design_pattern/lib/app/cores/network/api_network_service_impl.dart)
-- Add `print` statements to log the response body and status code in the `register` method. This will help identify if the field names are different or if the response is nested.
-
----
-
-### [Register Module]
-
-#### [MODIFY] [register_controller.dart](file:///D:/BBU_Lessons/Mobile_Programming/kps_flutter_getx_design_pattern/lib/app/module/auth/register/register_controller.dart)
-- Temporarily add debug logging for the `registerResponse` object.
+- Fix the `get` method's retry block: change `if (response.statusCode == 200)` to `if (retryResponse.statusCode == 200)`.
+- Use a local `headers` map inside each method to prevent cross-contamination of authorization tokens across different requests.
+- Ensure `jsonEncode` explicitly calls `.toJson()` for consistency.
 
 ## Verification Plan
 
+### Automated Tests
+- Run `analyze_file` on `api_network_service_impl.dart` and `RefreshTokenRequest.dart`.
+
 ### Manual Verification
-- Run the app and attempt to register.
-- Check the console logs for the printed response body.
-- Based on the logs, update `register_response.dart` if the keys are different (e.g., `access_token` instead of `accessToken`) or if the response is nested.
+- The user should test the `/posts` navigation again. If the token is expired, the app should now successfully refresh it and display the posts instead of returning `null`.
