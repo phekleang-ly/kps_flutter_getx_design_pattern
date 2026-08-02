@@ -17,8 +17,8 @@ import 'app/module/auth/repository/auth_repository_impl.dart';
 
 Future<void> main() async {
   await GetStorage.init();
-  Get.lazyPut<ApiNetworkService>(()=> ApiNetworkServiceImpl(), fenix: true);
 
+  Get.lazyPut<ApiNetworkService>(()=> ApiNetworkServiceImpl(), fenix: true);
   Get.lazyPut<AuthRepository>(()=> AuthRepositoryImpl(), fenix: true);
 
   runApp(const MyApp());
