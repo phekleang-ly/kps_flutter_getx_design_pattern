@@ -1,0 +1,12 @@
+- [x] Rename model files to `lower_case_with_underscores`
+- [x] Update imports in `lib/app/cores/models/auth/` files
+- [x] Update `api_network_service.dart` (imports and fix RegisterRequest type)
+- [x] Update `api_network_service_impl.dart` (imports and prefix naming)
+- [x] Update `auth_repository.dart` (imports and fix RegisterRequest type)
+- [x] Update `auth_repository_impl.dart` (imports)
+- [x] Update `register_controller.dart` (imports)
+- [x] Update `login_controller.dart` (imports)
+- [x] Update `register_view.dart` (imports)
+- [x] Update `login_view.dart` (imports)
+- [x] Update `main.dart` (clean up imports)
+- [x] Verify all files with `analyze_file`

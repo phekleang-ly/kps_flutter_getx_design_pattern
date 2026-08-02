@@ -49,6 +49,11 @@ class LoginView extends GetView<LoginController> {
                   controller.onLogin();
                 },
               ),
+              SizedBox(height: 20),
+              TextButton(
+                onPressed: () => Get.toNamed("/register"),
+                child: Text("Don't have an account? Register"),
+              ),
             ],
           ),
         ),

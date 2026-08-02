@@ -1,9 +1,10 @@
 import 'package:get/get.dart';
-import 'package:kps_flutter_getx_design_battern/app/data/access_token.dart';
+
+import '../../data/access_token.dart';
 
 class SplashController extends GetxController {
 
-  _checklogin() async {
+  Future<void> _checklogin() async {
     loading.value = true;
     await Future.delayed(Duration(seconds:3));
     loading.value = false;
