@@ -6,13 +6,13 @@ class AccessToken {
   static final String _refreshToken = "REFRESH_TOKEN";
   static final String _username = "USERNAME";
 
-  static saveToken({String? token, String? refresh, String? username}){
+  static void saveToken({String? token, String? refresh, String? username}){
     _storage.write(_accessToken, token);
     _storage.write(_refreshToken, refresh);
     _storage.write(_username, username);
   }
 
-  static removeToken(){
+  static void removeToken(){
     _storage.remove(_accessToken);
     _storage.remove(_refreshToken);
     _storage.remove(_username);

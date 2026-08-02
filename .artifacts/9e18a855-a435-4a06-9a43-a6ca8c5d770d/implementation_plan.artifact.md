@@ -1,54 +1,24 @@
-# Implementation Plan - Fix Code Issues
+# Implementation Plan - Fix Null AccessToken on Registration
 
-Resolve syntax errors, compiler warnings, and naming convention issues across the project.
-
-## User Review Required
-
-> [!IMPORTANT]
-> I will be renaming files to follow the Dart `lower_case_with_underscores` convention (e.g., `RegisterRequest.dart` -> `register_request.dart`). This will affect all files in `lib/app/cores/models/auth/`.
+The user reports that `accessToken` is null in the `RegisterResponse` after a successful registration, even though it works for login. This plan involves adding debug logging to inspect the API response and then adjusting the model mapping if necessary.
 
 ## Proposed Changes
 
 ### [Cores]
 
 #### [MODIFY] [api_network_service_impl.dart](file:///D:/BBU_Lessons/Mobile_Programming/kps_flutter_getx_design_pattern/lib/app/cores/network/api_network_service_impl.dart)
-- Rename `httpClient` prefix to `http` to follow naming conventions.
+- Add `print` statements to log the response body and status code in the `register` method. This will help identify if the field names are different or if the response is nested.
 
-#### [RENAME] `lib/app/cores/models/auth/RegisterRequest.dart` -> `register_request.dart`
-#### [RENAME] `lib/app/cores/models/auth/RegisterResponse.dart` -> `register_response.dart`
-#### [RENAME] `lib/app/cores/models/auth/LoginRequest.dart` -> `login_request.dart`
-#### [RENAME] `lib/app/cores/models/auth/LoginResponse.dart` -> `login_response.dart`
-#### [RENAME] `lib/app/cores/models/auth/User.dart` -> `user.dart`
-#### [RENAME] `lib/app/cores/models/auth/Roles.dart` -> `roles.dart`
+---
 
-### [Auth Module]
-
-#### [MODIFY] [auth_repository.dart](file:///D:/BBU_Lessons/Mobile_Programming/kps_flutter_getx_design_pattern/lib/app/module/auth/repository/auth_repository.dart)
-- Add missing import for `RegisterRequest`.
-- Update all model imports to use new filenames.
-
-#### [MODIFY] [api_network_service.dart](file:///D:/BBU_Lessons/Mobile_Programming/kps_flutter_getx_design_pattern/lib/app/cores/network/api_network_service.dart)
-- Update model imports to use new filenames.
-
-#### [MODIFY] [api_network_service_impl.dart](file:///D:/BBU_Lessons/Mobile_Programming/kps_flutter_getx_design_pattern/lib/app/cores/network/api_network_service_impl.dart)
-- Update model imports to use new filenames.
-- Rename `httpClient` prefix to `http`.
-
-#### [MODIFY] [auth_repository_impl.dart](file:///D:/BBU_Lessons/Mobile_Programming/kps_flutter_getx_design_pattern/lib/app/module/auth/repository/auth_repository_impl.dart)
-- Update model imports to use new filenames.
+### [Register Module]
 
 #### [MODIFY] [register_controller.dart](file:///D:/BBU_Lessons/Mobile_Programming/kps_flutter_getx_design_pattern/lib/app/module/auth/register/register_controller.dart)
-- Update model imports to use new filenames.
-
-#### [MODIFY] [login_controller.dart](file:///D:/BBU_Lessons/Mobile_Programming/kps_flutter_getx_design_pattern/lib/app/module/auth/login/login_controller.dart)
-- Update model imports to use new filenames.
-
-### [App Configuration]
-
-#### [MODIFY] [main.dart](file:///D:/BBU_Lessons/Mobile_Programming/kps_flutter_getx_design_pattern/lib/main.dart)
-- Remove unnecessary `get_material_app.dart` import.
+- Temporarily add debug logging for the `registerResponse` object.
 
 ## Verification Plan
 
-### Automated Tests
-- Run `analyze_file` on all modified files to ensure no errors or warnings remain.
+### Manual Verification
+- Run the app and attempt to register.
+- Check the console logs for the printed response body.
+- Based on the logs, update `register_response.dart` if the keys are different (e.g., `access_token` instead of `accessToken`) or if the response is nested.

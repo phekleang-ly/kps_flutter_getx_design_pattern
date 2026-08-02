@@ -95,17 +95,36 @@ class RegisterController extends GetxController {
 
       var registerResponse = await authRepository.register(request);
       
-      loading.value = false;
-
       if (registerResponse.accessToken != null) {
+        // Option 1: API returned token directly
+        loading.value = false;
         AccessToken.saveToken(
           username: username,
           token: registerResponse.accessToken,
           refresh: registerResponse.refreshToken,
         );
         Get.offAllNamed("/home");
+      } else if (registerResponse.code == "200" || registerResponse.message == "Create Success") {
+        // Option 2: Registration success but no token (Auto-Login)
+        var loginResponse = await authRepository.login(
+          username: username,
+          password: password,
+        );
+        loading.value = false;
+        if (loginResponse.accessToken != null) {
+          AccessToken.saveToken(
+            username: username,
+            token: loginResponse.accessToken,
+            refresh: loginResponse.refreshToken,
+          );
+          Get.offAllNamed("/home");
+        } else {
+          Get.snackbar("Success", "Account created successfully. Please login.");
+          Get.offAllNamed("/login");
+        }
       } else {
-        Get.snackbar("Error", "Registration failed. Please try again.");
+        loading.value = false;
+        Get.snackbar("Error", registerResponse.message ?? "Registration failed.");
       }
     } catch (e) {
       loading.value = false;

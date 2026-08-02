@@ -10,3 +10,4 @@
 - [x] Update `login_view.dart` (imports)
 - [x] Update `main.dart` (clean up imports)
 - [x] Verify all files with `analyze_file`
+- [x] Fix Registration Auto-Login: Call login API after successful registration (since Register API doesn't return token)

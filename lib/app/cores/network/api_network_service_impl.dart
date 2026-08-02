@@ -43,6 +43,7 @@ class ApiNetworkServiceImpl extends ApiNetworkService {
       body: jsonEncode(req.toJson()),
       headers: headers,
     );
+
     //Mapping Response
     if (response.statusCode == 200 || response.statusCode == 201) {
       registerResponse = RegisterResponse.fromJson(jsonDecode(response.body));
